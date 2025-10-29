@@ -29,8 +29,6 @@ dotnet run
 backend runs on http://localhost:5172
 
 ### Frontend
-
-cd highfield-frontend
 npm install
 ng serve
 
