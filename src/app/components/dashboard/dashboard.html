@@ -1,0 +1,59 @@
+<mat-toolbar color="primary">
+  <strong>User Data DashBoard</strong>
+</mat-toolbar>
+
+@if(loading && !error){
+<app-loading />
+} @if(error){
+<div class="error-container">
+  <h1 class="error-text">{{ error }}</h1>
+</div>
+} @if(userData && !error){
+<app-stats-card [data]="userData" />
+} @if(!error){
+<div class="container">
+  <div class="content-wrapper">
+    <h1>Color Frequency</h1>
+    <div class="flex-container">
+      @for(user of userData?.colourFrequency; track user.colour){
+      <app-color-card [users]="user" />
+      }
+    </div>
+  </div>
+</div>
+}
+
+<div class="table-container">
+  <div class="content-wrapper">
+    <h1>Users</h1>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="currentAge">
+        <th mat-header-cell *matHeaderCellDef>Current Age</th>
+        <td mat-cell *matCellDef="let element">{{ element.currentAge }}</td>
+      </ng-container>
+      <ng-container matColumnDef="ageIn20Years">
+        <th mat-header-cell *matHeaderCellDef>Age in 20 Years</th>
+        <td mat-cell *matCellDef="let element">{{ element.ageIn20Years }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef>Symbol</th>
+        <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
